@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Trap Door • Whiskey</title><style>:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#141713;color:#eeeade}*{box-sizing:border-box}body{margin:0}main{max-width:1400px;margin:auto;padding:48px 36px}header{border-bottom:1px solid #424536;padding-bottom:32px}.eyebrow{letter-spacing:.22em;color:#d6ae67;font-size:12px;font-weight:700}h1{font-family:Georgia,serif;font-size:clamp(40px,6vw,68px);font-weight:400;line-height:1.08;margin:22px 0}p,footer{color:#b7b9aa;line-height:1.6}h2{font-family:Georgia,serif;font-size:27px;font-weight:400}#save-status{font-size:13px;color:#d6ae67}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.stats article,.panel{background:#20251e;border:1px solid #3c4435;border-radius:12px;padding:24px}.stats span{display:block;color:#b7b9aa;font-size:14px}.stats strong{display:block;font-size:32px;margin-top:12px;font-weight:500}.note{font-size:12px}.workspace{display:grid;grid-template-columns:350px minmax(0,1fr);gap:24px;margin-top:32px}.panel h2{margin-top:0}label{display:block;font-size:13px;color:#d6d8cb;margin-bottom:18px}input,select{display:block;width:100%;margin-top:8px;padding:12px;border:1px solid #535c49;border-radius:6px;background:#171c15;color:#fff;font:inherit}input:focus,select:focus,button:focus-visible{outline:2px solid #e2b86f;outline-offset:3px}.fields{display:flex;gap:16px}.fields>label{flex:1;min-width:0}.quote{background:#151b13;border-left:3px solid #d6ae67;padding:18px;margin:20px 0}.quote span,.quote small{display:block;color:#bbc2af}.quote strong{display:block;font-size:40px;color:#e2b86f;margin:8px 0}.quote small{font-size:12px;line-height:1.6}button,.file-button{border:1px solid #d6ae67;border-radius:6px;padding:12px 16px;background:#d6ae67;color:#171c15;cursor:pointer;font:inherit;font-size:13px;font-weight:600}.secondary,.file-button{background:transparent;color:#e2c590;border-color:#60684f}.actions{display:flex;gap:10px;flex-wrap:wrap}.file-button{position:relative;margin:0;overflow:hidden}.file-button input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}.file-button:focus-within{outline:2px solid #e2b86f}.section-head{display:flex;justify-content:space-between;gap:10px;align-items:baseline}.section-head span{font-size:12px;color:#b7b9aa}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th{text-align:left;color:#acb79c;font-size:11px;text-transform:uppercase;letter-spacing:.05em}th,td{padding:14px 8px;border-bottom:1px solid #3c4435}td:first-child{min-width:140px;overflow-wrap:anywhere}.small{padding:6px 8px;margin:3px}#form-error{color:#ffb1a8;font-size:13px}footer{font-size:12px;margin-top:32px}[hidden]{display:none!important}@media(max-width:1000px){.workspace{grid-template-columns:1fr}}@media(max-width:560px){main{padding:30px 16px}.stats{grid-template-columns:1fr}.stats article{padding:18px}.stats strong{font-size:27px}.panel{padding:18px}.fields{flex-direction:column;gap:0}}
+</style></head>
+<body><main><header><div class="eyebrow">TRAP DOOR / WHISKEY</div><h1>Good whiskey.<br>Clear numbers.</h1><p>Price your pours. Organize your collection. Know what’s behind the bar.</p><div id="save-status" role="status">Loading saved inventory…</div></header>
+<section aria-labelledby="dashboard"><h2 id="dashboard">Behind the bar</h2><div class="stats"><article><span>Bottles in stock</span><strong id="total-bottles">0</strong></article><article><span>Inventory cost</span><strong id="total-cost">$0.00</strong></article><article><span>Potential sales</span><strong id="total-revenue">$0.00</strong></article></div><p class="note">Potential sales assume all 16 pours sell at the calculated 5× price; excludes taxes, waste, and other expenses.</p></section>
+<div class="workspace"><section class="panel" aria-labelledby="calculator"><h2 id="calculator">Pour calculator</h2><p>16 pours per bottle · 5× cost markup</p><form id="whiskey-form"><label>Whiskey name<input id="name" required maxlength="120" placeholder="e.g. Woodford Reserve"></label><div class="fields"><label>Bottle cost ($)<input id="cost" type="number" min="0.01" max="1000000" step="0.01" required placeholder="45.00"></label><label>Bottles in stock<input id="bottles" type="number" min="0" max="1000000" step="1" value="1" required></label></div><label>Category<select id="category"><option>Whiskey</option><option>Scotch</option><option>Bourbon</option></select></label><p class="note">Assign categories manually. No category price thresholds have been specified.</p><div class="quote"><span>Suggested pour price</span><strong id="pour-price">—</strong><small id="cost-detail">Enter a bottle cost to calculate.</small></div><p id="form-error" role="alert"></p><div class="actions"><button id="submit" type="submit">Add to inventory</button><button id="cancel" type="button" class="secondary" hidden>Cancel edit</button></div></form></section>
+<section class="panel inventory" aria-labelledby="inventory"><div class="section-head"><h2 id="inventory">Your inventory</h2><span id="item-count">0 whiskeys</span></div><div class="fields"><label>Search<input id="search" type="search" placeholder="Find a whiskey…"></label><label>Category<select id="filter"><option value="">All categories</option><option>Whiskey</option><option>Scotch</option><option>Bourbon</option></select></label></div><div class="table-wrap"><table><thead><tr><th>Whiskey</th><th>Category</th><th>Bottle cost</th><th>Pour price</th><th>Stock</th><th>Actions</th></tr></thead><tbody id="rows"></tbody></table></div><p id="empty">Your shelf is empty. Add your first whiskey using the calculator.</p><div class="actions"><button id="export" class="secondary">Download backup</button><label class="file-button">Import backup<input id="import" type="file" accept="application/json,.json"></label></div><p id="backup-status" role="status"></p></section></div><footer>Automatically saved in this browser on this device. Download backups to protect your inventory. Data does not sync between devices.</footer></main><script type="module">
+const CATEGORIES = ['Whiskey', 'Scotch', 'Bourbon'];
+const STORAGE_KEY = 'trap-door-whiskey-v1';
+function price(cost) {
+  if (!Number.isFinite(cost) || cost <= 0 || cost > 1000000) throw new Error('Bottle cost must be greater than $0 and at most $1,000,000.');
+  return { perPourCost: cost / 16, pourPrice: cost / 16 * 5, bottleRevenue: cost * 5, bottleProfit: cost * 4 };
+}
+function validate(item) {
+  if (!item || typeof item.id !== 'string' || !item.id || typeof item.name !== 'string' || !item.name.trim() || item.name.length > 120) throw new Error('Enter a whiskey name (up to 120 characters).');
+  price(item.cost);
+  if (!CATEGORIES.includes(item.category)) throw new Error('Choose a valid category.');
+  if (!Number.isSafeInteger(item.bottles) || item.bottles < 0 || item.bottles > 1000000) throw new Error('Bottle quantity must be a whole number from 0 to 1,000,000.');
+  return item;
+}
+function decode(raw) {
+  if (!raw) return [];
+  const data = JSON.parse(raw);
+  if (!Array.isArray(data)) throw new Error('Inventory backup must be a list.');
+  // Preserve legacy inventory and backups; users can refine the category later.
+  for (const item of data) {
+    if (item && ['1M', '2K', '3J', '4A'].includes(item.category)) item.category = 'Whiskey';
+  }
+  data.forEach(validate);
+  if (new Set(data.map(x => x.id)).size !== data.length) throw new Error('Duplicate inventory IDs.');
+  return data;
+}
+function totals(items) {
+  return items.reduce((t, item) => ({ bottles: t.bottles + item.bottles, cost: t.cost + item.cost * item.bottles, revenue: t.revenue + price(item.cost).bottleRevenue * item.bottles }), { bottles: 0, cost: 0, revenue: 0 });
+}
+
+const $ = id => document.getElementById(id);
+const money = value => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
+let items = [], editing = null, storageHealthy = true;
+try { items = decode(localStorage.getItem(STORAGE_KEY)); $('save-status').textContent = 'Auto-save on · stored on this device'; }
+catch { storageHealthy = false; $('save-status').textContent = 'Saved inventory could not be read. Original data is preserved. Download or recover it before making changes.'; }
+function persist(next) {
+  if (!storageHealthy) throw new Error('Saving is blocked to protect unreadable data. Recover browser storage before continuing.');
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  items = next;
+  $('save-status').textContent = `Saved on this device at ${new Date().toLocaleTimeString()}`;
+  render();
+}
+function quote() {
+  try { const p = price(Number($('cost').value)); $('pour-price').textContent = money(p.pourPrice); $('cost-detail').textContent = `${money(p.perPourCost)} cost per pour · ${money(p.bottleRevenue)} sales per bottle`; }
+  catch { $('pour-price').textContent = '—'; $('cost-detail').textContent = 'Enter a valid bottle cost to calculate.'; }
+}
+function reset() { editing = null; $('whiskey-form').reset(); $('submit').textContent = 'Add to inventory'; $('cancel').hidden = true; $('form-error').textContent = ''; quote(); }
+function render() {
+  const t = totals(items); $('total-bottles').textContent = t.bottles; $('total-cost').textContent = money(t.cost); $('total-revenue').textContent = money(t.revenue); $('item-count').textContent = `${items.length} whiskeys`;
+  const shown = items.filter(x => x.name.toLowerCase().includes($('search').value.toLowerCase()) && (!$('filter').value || x.category === $('filter').value));
+  $('rows').replaceChildren(); $('empty').hidden = shown.length > 0; $('empty').textContent = items.length ? 'No whiskeys match your filters.' : 'Your shelf is empty. Add your first whiskey using the calculator.';
+  for (const item of shown) {
+    const row = document.createElement('tr');
+    for (const value of [item.name, item.category, money(item.cost), money(price(item.cost).pourPrice), item.bottles]) { const td = document.createElement('td'); td.textContent = value; row.append(td); }
+    const actions = document.createElement('td');
+    for (const action of ['Edit', 'Delete']) { const b = document.createElement('button'); b.className = 'small secondary'; b.textContent = action; b.setAttribute('aria-label', `${action} ${item.name}`); b.onclick = () => {
+      if (action === 'Edit') { editing = item.id; for (const key of ['name', 'cost', 'category', 'bottles']) $(key).value = item[key]; $('submit').textContent = 'Save changes'; $('cancel').hidden = false; quote(); $('name').focus(); }
+      else if (confirm(`Delete ${item.name} from inventory?`)) { try { persist(items.filter(x => x.id !== item.id)); if (editing === item.id) reset(); } catch (e) { $('form-error').textContent = `Could not save: ${e.message}`; } }
+    }; actions.append(b); } row.append(actions); $('rows').append(row);
+  }
+}
+$('cost').addEventListener('input', quote);
+$('cancel').onclick = reset;
+$('search').oninput = render; $('filter').onchange = render;
+$('whiskey-form').onsubmit = event => { event.preventDefault(); try { const item = validate({ id: editing || crypto.randomUUID(), name: $('name').value.trim(), cost: Number($('cost').value), bottles: Number($('bottles').value), category: $('category').value }); persist(editing ? items.map(x => x.id === editing ? item : x) : [...items, item]); reset(); } catch (e) { $('form-error').textContent = `Could not save: ${e.message}`; } };
+$('export').onclick = () => { const url = URL.createObjectURL(new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' })); const a = document.createElement('a'); a.href = url; a.download = 'trap-door-inventory.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); };
+$('import').onchange = async event => { try { const file = event.target.files[0]; if (!file) return; if (file.size > 5000000) throw new Error('Backup must be smaller than 5 MB.'); const next = decode(await file.text()); if (!confirm(`Replace your inventory with ${next.length} whiskeys? Download a backup first if needed.`)) return; persist(next); reset(); $('backup-status').textContent = 'Backup imported and saved.'; } catch (e) { $('backup-status').textContent = `Import failed: ${e.message}`; } finally { event.target.value = ''; } };
+render(); quote();
+
+</script></body></html>
